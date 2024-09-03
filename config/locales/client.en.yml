@@ -3,7 +3,7 @@ en:
     admin:
       site_settings:
         categories:
-          TODO_plugin_name: "Plugin Name"
+          discourse_exempt_from_watched_words: "Discourse Exempt From Watched Words"
   js:
-    discourse_plugin_name:
+    discourse_exempt_from_watched_words:
       placeholder: placeholder

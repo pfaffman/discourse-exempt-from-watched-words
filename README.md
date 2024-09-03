@@ -1,4 +1,4 @@
-# **Plugin Name** Plugin
+# **Discourse Exempt From Watched Words** Plugin
 
 **Plugin Summary**
 
