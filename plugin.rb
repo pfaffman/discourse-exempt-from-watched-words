@@ -15,6 +15,7 @@ module ::DiscourseExemptFromWatchedWords
 end
 
 require_relative "lib/discourse_exempt_from_watched_words/engine"
+require_relative "lib/discourse_exempt_from_watched_words/override_exempt_user"
 
 after_initialize do
   # Code which should run after Rails has finished booting

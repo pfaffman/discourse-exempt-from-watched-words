@@ -5,4 +5,6 @@ DiscourseExemptFromWatchedWords::Engine.routes.draw do
   # define routes here
 end
 
-Discourse::Application.routes.draw { mount ::DiscourseExemptFromWatchedWords::Engine, at: "discourse-exempt-from-watched-words" }
+Discourse::Application.routes.draw do
+  mount ::DiscourseExemptFromWatchedWords::Engine, at: "discourse-exempt-from-watched-words"
+end

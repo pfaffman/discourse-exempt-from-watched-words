@@ -2,3 +2,9 @@ discourse_exempt_from_watched_words:
   discourse_exempt_from_watched_words_enabled:
     default: false
     client: true
+  exempt_from_watched_words_groups:
+    type: group_list
+    list_type: compact
+    default: ""
+    allow_any: false
+    refresh: true    

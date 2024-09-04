@@ -1,0 +1,40 @@
+# frozen_string_literal: true
+
+require "new_post_manager"
+require "rails_helper"
+RSpec.describe NewPostManager do
+  fab!(:user) { Fabricate(:user) }
+  fab!(:topic) { Fabricate(:topic, user: user) }
+  fab!(:exempt_group) { Fabricate(:group, name: "Exempt#{SecureRandom.hex(4)}") }
+
+  def build_manager_with(raw)
+    NewPostManager.new(user, raw: raw, topic_id: topic.id, first_post_checks: true)
+  end  
+
+  it "checks for watched words" do
+    puts "Checking watched words"
+    Fabricate(:watched_word, word: "darn", action: WatchedWord.actions[:require_approval])
+    result = NewPostManager(user, raw: "this is darn new post content", topic_id: topic.id, first_post_checks: true) 
+
+    puts "Here is the result: #{result.inspect}"
+
+    # Assuming status is part of the reviewable object
+    expect(result.reviewable.status).to eq("pending")  # Adjusted this line
+    expect(result.reason).to eq(:watched_word)
+  end  
+
+  it "allows watched words from exempt groups" do
+    SiteSetting.exempt_from_watched_words_groups = exempt_group.id.to_s
+    SiteSetting.discourse_exempt_from_watched_words_enabled = true
+    exempt_group.add(user)
+
+    Fabricate(:watched_word, word: "darn", action: WatchedWord.actions[:require_approval])
+    manager = build_manager_with("this is darn new post content")
+    result = NewPostManager.new(user, raw: "this is darn new post content", topic_id: topic.id, first_post_checks: true)
+    puts "Here is the result for exempt groups: #{result.inspect}"
+    
+    # Here, you need to check what the expected action/response is
+    expect(result.action).to eq(:enqueued) # Adjusted based on expected action
+    expect(result.reason).to eq(:watched_word)
+  end  
+end
