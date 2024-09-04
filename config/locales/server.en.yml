@@ -1,1 +1,4 @@
 en:
+  site_settings: 
+    discourse_exempt_from_watched_words_enabled: "Enable exemption from watched words plugin"
+    exempt_from_watched_words_groups: "Groups exempt from watched words (staff are always exempt)"
